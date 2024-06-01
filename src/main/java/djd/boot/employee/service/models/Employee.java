@@ -1,9 +1,20 @@
 package djd.boot.employee.service.models;
 
+import java.util.Objects;
+
+import jakarta.validation.constraints.NotBlank;
+
 public class Employee {
+	@NotBlank(message = "EmployeeId cannot be blank.")
     private String employeeId;
+
+	@NotBlank(message = "Name cannot be blank.")
     private String name;
+	
+	@NotBlank(message = "Role cannot be blank.")
     private String role;
+	
+	@NotBlank(message = "Department cannot be blank.")
     private String department;
     
 	public Employee(String employeeId, String name, String role, String department) {
@@ -37,5 +48,17 @@ public class Employee {
 	}
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		return Objects.equals(employeeId, other.employeeId);
 	}
 }
