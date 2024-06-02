@@ -3,8 +3,11 @@ package djd.boot.employee.service.controller;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,11 +33,13 @@ public class EmployeeServiceController {
 	
 	private EmployeeServiceConfigProperties config;
 	private EmployeeServiceDAO empDao;
+	private MessageSource messageSource;
 	
 	@Autowired
-	public EmployeeServiceController(EmployeeServiceConfigProperties config, EmployeeServiceDAO empDao) {
+	public EmployeeServiceController(EmployeeServiceConfigProperties config, EmployeeServiceDAO empDao, MessageSource messageSource) {
 		this.config = config;
 		this.empDao = empDao;
+		this.messageSource = messageSource;
 	}
 	
 	@GetMapping("employees/configs")
@@ -54,6 +59,12 @@ public class EmployeeServiceController {
 	@GetMapping(path = "/employees/{id}")
 	public Employee getEmployeeById(@PathVariable String id) {
 		return empDao.getEmployeeById(id);
+	}
+	
+	@GetMapping(path = "/employees/greet")
+	public String greet() {
+		Locale locale = LocaleContextHolder.getLocale();
+		return messageSource.getMessage("good.morning.message", null, "Default Message", locale);
 	}
 	
 	@PostMapping(path = "/employees")

@@ -24,6 +24,7 @@ public class EmployeeServiceExceptionHandler extends ResponseEntityExceptionHand
 		return new ResponseEntity<ErrorDetails>(excDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
